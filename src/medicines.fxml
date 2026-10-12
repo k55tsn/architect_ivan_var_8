@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.MedicinesController"
+      spacing="10" style="-fx-padding: 10;">
+
+    <HBox spacing="10">
+        <Button text="Добавить" onAction="#onAdd"/>
+    </HBox>
+
+    <TableView fx:id="medicinesTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colName" text="Наименование" prefWidth="250"/>
+            <TableColumn fx:id="colCategory" text="Категория" prefWidth="180"/>
+            <TableColumn fx:id="colPrice" text="Цена (руб.)" prefWidth="120"/>
+            <TableColumn fx:id="colNeedRecipe" text="Требуется рецепт" prefWidth="150"/>
+        </columns>
+    </TableView>
+</VBox>

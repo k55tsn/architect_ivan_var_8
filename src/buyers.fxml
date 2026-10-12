@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.BuyersController"
+      spacing="10" style="-fx-padding: 10;">
+
+    <HBox spacing="10">
+        <Button text="Добавить" onAction="#onAdd"/>
+    </HBox>
+
+    <TableView fx:id="buyersTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colLastName" text="Фамилия" prefWidth="150"/>
+            <TableColumn fx:id="colFirstName" text="Имя" prefWidth="150"/>
+            <TableColumn fx:id="colPhone" text="Телефон" prefWidth="150"/>
+            <TableColumn fx:id="colCard" text="Номер дисконтной карты" prefWidth="200"/>
+        </columns>
+    </TableView>
+</VBox>

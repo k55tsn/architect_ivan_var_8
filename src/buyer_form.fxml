@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.BuyerFormController"
+      spacing="10" style="-fx-padding: 20; -fx-background-color: #E8F5E9;"
+      prefWidth="380">
+
+    <Label text="Покупатель" styleClass="label-header"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Фамилия:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Имя:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Телефон:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Номер карты:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="cardField" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="8 цифр"/>
+    </GridPane>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: red;"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Сохранить" onAction="#onSave"/>
+        <Button text="Отмена" onAction="#onCancel"/>
+    </HBox>
+</VBox>

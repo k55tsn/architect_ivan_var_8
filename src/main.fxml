@@ -23,7 +23,6 @@
 
     <center>
         <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
-
             <tabs>
 
                 <Tab text="Продажи">
@@ -52,37 +51,13 @@
 
                 <Tab text="Покупатели">
                     <content>
-                        <VBox spacing="10" style="-fx-padding: 10;">
-                            <HBox spacing="10">
-                                <Button text="Добавить"/>
-                            </HBox>
-                            <TableView fx:id="buyersTable" VBox.vgrow="ALWAYS">
-                                <columns>
-                                    <TableColumn fx:id="colBuyerLastName" text="Фамилия" prefWidth="150"/>
-                                    <TableColumn fx:id="colBuyerFirstName" text="Имя" prefWidth="150"/>
-                                    <TableColumn fx:id="colBuyerPhone" text="Телефон" prefWidth="150"/>
-                                    <TableColumn fx:id="colBuyerCard" text="Номер дисконтной карты" prefWidth="200"/>
-                                </columns>
-                            </TableView>
-                        </VBox>
+                        <fx:include source="buyers.fxml"/>
                     </content>
                 </Tab>
 
                 <Tab text="Препараты">
                     <content>
-                        <VBox spacing="10" style="-fx-padding: 10;">
-                            <HBox spacing="10">
-                                <Button text="Добавить"/>
-                            </HBox>
-                            <TableView fx:id="medicinesTable" VBox.vgrow="ALWAYS">
-                                <columns>
-                                    <TableColumn fx:id="colMedName" text="Наименование" prefWidth="200"/>
-                                    <TableColumn fx:id="colMedCategory" text="Категория" prefWidth="150"/>
-                                    <TableColumn fx:id="colMedPrice" text="Цена (руб.)" prefWidth="120"/>
-                                    <TableColumn fx:id="colMedRecipe" text="Требуется рецепт" prefWidth="150"/>
-                                </columns>
-                            </TableView>
-                        </VBox>
+                        <fx:include source="medicines.fxml"/>
                     </content>
                 </Tab>
 

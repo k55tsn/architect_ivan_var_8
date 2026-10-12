@@ -22,8 +22,72 @@
     </top>
 
     <center>
-        <Label text="Здесь будет содержимое (этап 3)"
-               style="-fx-font-size: 16pt; -fx-text-fill: #1B5E20;"/>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+
+            <tabs>
+
+                <Tab text="Продажи">
+                    <content>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <HBox spacing="10">
+                                <Button text="Добавить"/>
+                                <Button text="Загрузить" disable="true"/>
+                                <Button text="Сохранить" disable="true"/>
+                            </HBox>
+                            <TableView fx:id="salesTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colSalesId" text="ID" prefWidth="50"/>
+                                    <TableColumn fx:id="colSalesBuyer" text="Покупатель" prefWidth="180"/>
+                                    <TableColumn fx:id="colSalesMedicine" text="Препарат" prefWidth="180"/>
+                                    <TableColumn fx:id="colSalesQuantity" text="Количество" prefWidth="100"/>
+                                    <TableColumn fx:id="colSalesDate" text="Дата продажи" prefWidth="120"/>
+                                    <TableColumn fx:id="colSalesRecipe" text="Рецепт предъявлен" prefWidth="150"/>
+                                    <TableColumn fx:id="colSalesSum" text="Сумма (руб.)" prefWidth="120"/>
+                                    <TableColumn fx:id="colSalesDeviation" text="Отклонение от среднего" prefWidth="180"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Покупатели">
+                    <content>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <HBox spacing="10">
+                                <Button text="Добавить"/>
+                            </HBox>
+                            <TableView fx:id="buyersTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colBuyerLastName" text="Фамилия" prefWidth="150"/>
+                                    <TableColumn fx:id="colBuyerFirstName" text="Имя" prefWidth="150"/>
+                                    <TableColumn fx:id="colBuyerPhone" text="Телефон" prefWidth="150"/>
+                                    <TableColumn fx:id="colBuyerCard" text="Номер дисконтной карты" prefWidth="200"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Препараты">
+                    <content>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <HBox spacing="10">
+                                <Button text="Добавить"/>
+                            </HBox>
+                            <TableView fx:id="medicinesTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colMedName" text="Наименование" prefWidth="200"/>
+                                    <TableColumn fx:id="colMedCategory" text="Категория" prefWidth="150"/>
+                                    <TableColumn fx:id="colMedPrice" text="Цена (руб.)" prefWidth="120"/>
+                                    <TableColumn fx:id="colMedRecipe" text="Требуется рецепт" prefWidth="150"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </content>
+                </Tab>
+
+            </tabs>
+        </TabPane>
     </center>
 
     <bottom>

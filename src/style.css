@@ -1,0 +1,52 @@
+.root {
+    -fx-background-color: #E8F5E9;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 10pt;
+}
+
+.button {
+    -fx-background-color: #43A047;
+    -fx-text-fill: white;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #388E3C;
+}
+
+.button:disabled {
+    -fx-background-color: #A5D6A7;
+}
+
+.label-header {
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+}
+
+.status-bar {
+    -fx-background-color: #C8E6C9;
+    -fx-padding: 5;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #1B5E20;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #1B5E20;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #C8E6C9;
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #43A047;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}

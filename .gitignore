@@ -1,1 +1,20 @@
-gg
+# Compiled files
+out/
+*.class
+*.jar
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build output
+target/
+build/

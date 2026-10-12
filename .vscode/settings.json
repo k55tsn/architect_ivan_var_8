@@ -1,7 +1,0 @@
-{
-    "java.project.sourcePaths": ["src", "resources"],
-    "java.project.outputPath": "out",
-    "java.project.referencedLibraries": [
-        "C:/Users/Huawei/javafx-sdk-21.0.1/lib/**/*.jar"
-    ]
-}

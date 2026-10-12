@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainController">
+    <top>
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
+            <Label text="Аптека: учет продаж" styleClass="label-header"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ImageView fx:id="logoView" fitWidth="130" fitHeight="70">
+                <image><Image url="@logo.png"/></image>
+            </ImageView>
+        </HBox>
+    </top>
+    <center>
+        <Label text="Здесь будет содержимое (этап 3)"
+               style="-fx-font-size: 16pt; -fx-text-fill: #1B5E20;"/>
+    </center>
+    <bottom>
+        <HBox styleClass="status-bar" spacing="10">
+            <Label fx:id="statusLabel" text="Не авторизован"/>
+        </HBox>
+    </bottom>
+</BorderPane>

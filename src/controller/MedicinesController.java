@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Medicine;
+import util.DataStore;
 
 public class MedicinesController {
 
@@ -19,8 +18,7 @@ public class MedicinesController {
     @FXML private TableColumn<Medicine, Double> colPrice;
     @FXML private TableColumn<Medicine, Boolean> colNeedRecipe;
 
-    private final ObservableList<Medicine> medicines = FXCollections.observableArrayList();
-    private int nextId = 1;
+    private final DataStore store = DataStore.getInstance();
 
     @FXML
     private void initialize() {
@@ -29,7 +27,7 @@ public class MedicinesController {
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colNeedRecipe.setCellValueFactory(new PropertyValueFactory<>("needRecipe"));
 
-        medicinesTable.setItems(medicines);
+        medicinesTable.setItems(store.getMedicines());
 
         ContextMenu contextMenu = new ContextMenu();
         MenuItem editItem = new MenuItem("Редактировать");
@@ -58,9 +56,9 @@ public class MedicinesController {
     private void onAdd() {
         Medicine created = showForm(null);
         if (created != null) {
-            Medicine withId = new Medicine(nextId++, created.getName(), created.getCategory(),
-                    created.getPrice(), created.isNeedRecipe());
-            medicines.add(withId);
+            Medicine withId = new Medicine(store.nextMedicineId(), created.getName(),
+                    created.getCategory(), created.getPrice(), created.isNeedRecipe());
+            store.getMedicines().add(withId);
         }
     }
 
@@ -82,15 +80,15 @@ public class MedicinesController {
                 "Удалить препарат " + medicine.getName() + "?",
                 ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(bt -> {
-            if (bt == ButtonType.YES) medicines.remove(medicine);
+            if (bt == ButtonType.YES) store.getMedicines().remove(medicine);
         });
     }
 
     private void duplicateMedicine(Medicine medicine) {
         if (medicine == null) return;
-        Medicine copy = new Medicine(nextId++, medicine.getName(), medicine.getCategory(),
-                medicine.getPrice(), medicine.isNeedRecipe());
-        medicines.add(copy);
+        Medicine copy = new Medicine(store.nextMedicineId(), medicine.getName(),
+                medicine.getCategory(), medicine.getPrice(), medicine.isNeedRecipe());
+        store.getMedicines().add(copy);
     }
 
     private Medicine showForm(Medicine existing) {
@@ -110,9 +108,5 @@ public class MedicinesController {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public ObservableList<Medicine> getMedicines() {
-        return medicines;
     }
 }

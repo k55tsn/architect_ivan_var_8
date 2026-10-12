@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Buyer;
+import util.DataStore;
 
 public class BuyersController {
 
@@ -19,8 +18,7 @@ public class BuyersController {
     @FXML private TableColumn<Buyer, String> colPhone;
     @FXML private TableColumn<Buyer, String> colCard;
 
-    private final ObservableList<Buyer> buyers = FXCollections.observableArrayList();
-    private int nextId = 1;
+    private final DataStore store = DataStore.getInstance();
 
     @FXML
     private void initialize() {
@@ -29,7 +27,7 @@ public class BuyersController {
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colCard.setCellValueFactory(new PropertyValueFactory<>("cardNumber"));
 
-        buyersTable.setItems(buyers);
+        buyersTable.setItems(store.getBuyers());
 
         ContextMenu contextMenu = new ContextMenu();
         MenuItem editItem = new MenuItem("Редактировать");
@@ -58,9 +56,9 @@ public class BuyersController {
     private void onAdd() {
         Buyer created = showForm(null);
         if (created != null) {
-            Buyer withId = new Buyer(nextId++, created.getLastName(), created.getFirstName(),
-                    created.getPhone(), created.getCardNumber());
-            buyers.add(withId);
+            Buyer withId = new Buyer(store.nextBuyerId(), created.getLastName(),
+                    created.getFirstName(), created.getPhone(), created.getCardNumber());
+            store.getBuyers().add(withId);
         }
     }
 
@@ -82,15 +80,15 @@ public class BuyersController {
                 "Удалить покупателя " + buyer.getLastName() + " " + buyer.getFirstName() + "?",
                 ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(bt -> {
-            if (bt == ButtonType.YES) buyers.remove(buyer);
+            if (bt == ButtonType.YES) store.getBuyers().remove(buyer);
         });
     }
 
     private void duplicateBuyer(Buyer buyer) {
         if (buyer == null) return;
-        Buyer copy = new Buyer(nextId++, buyer.getLastName(), buyer.getFirstName(),
+        Buyer copy = new Buyer(store.nextBuyerId(), buyer.getLastName(), buyer.getFirstName(),
                 buyer.getPhone(), buyer.getCardNumber());
-        buyers.add(copy);
+        store.getBuyers().add(copy);
     }
 
     private Buyer showForm(Buyer existing) {
@@ -110,9 +108,5 @@ public class BuyersController {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public ObservableList<Buyer> getBuyers() {
-        return buyers;
     }
 }

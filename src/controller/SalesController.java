@@ -1,5 +1,6 @@
 package controller;
 
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -139,7 +140,7 @@ public class SalesController {
         }
     }
 
-    @FXML
+       @FXML
     private void onSave() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Сохранить продажи в CSV");
@@ -152,9 +153,8 @@ public class SalesController {
 
         try {
             CsvUtil.saveSales(file, store.getSales());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                    "Сохранено " + store.getSales().size() + " записей в " + file.getName());
-            alert.showAndWait();
+            new Alert(Alert.AlertType.INFORMATION,
+                    "Сохранено " + store.getSales().size() + " записей в " + file.getName()).showAndWait();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Ошибка сохранения: " + e.getMessage()).showAndWait();
         }
@@ -174,9 +174,8 @@ public class SalesController {
             List<Sale> loaded = CsvUtil.loadSales(file);
             store.getSales().setAll(loaded);
             salesTable.refresh();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                    "Загружено " + loaded.size() + " записей из " + file.getName());
-            alert.showAndWait();
+            new Alert(Alert.AlertType.INFORMATION,
+                    "Загружено " + loaded.size() + " записей из " + file.getName()).showAndWait();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Ошибка загрузки: " + e.getMessage()).showAndWait();
         }

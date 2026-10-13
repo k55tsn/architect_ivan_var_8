@@ -12,14 +12,10 @@ import java.util.List;
 
 public class CsvUtil {
 
-    /**
-     * Сохраняет список продаж в CSV-файл.
-     */
     public static void saveSales(File file, List<Sale> sales) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
 
-            // Заголовок
             writer.write("ID;ID_покупателя;Фамилия;Имя;ID_препарата;Наименование;Категория;Цена;Требуется_рецепт;Количество;Дата;Рецепт_предъявлен;Сумма");
             writer.newLine();
 
@@ -47,9 +43,6 @@ public class CsvUtil {
         }
     }
 
-    /**
-     * Загружает список продаж из CSV-файла.
-     */
     public static List<Sale> loadSales(File file) throws IOException {
         List<Sale> sales = new ArrayList<>();
         DataStore store = DataStore.getInstance();

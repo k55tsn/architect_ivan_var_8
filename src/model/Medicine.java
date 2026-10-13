@@ -25,4 +25,9 @@ public class Medicine {
     public void setCategory(String v) { this.category = v; }
     public void setPrice(double v) { this.price = v; }
     public void setNeedRecipe(boolean v) { this.needRecipe = v; }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

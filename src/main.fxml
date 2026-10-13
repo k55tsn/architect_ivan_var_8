@@ -27,25 +27,7 @@
 
                 <Tab text="Продажи">
                     <content>
-                        <VBox spacing="10" style="-fx-padding: 10;">
-                            <HBox spacing="10">
-                                <Button text="Добавить"/>
-                                <Button text="Загрузить" disable="true"/>
-                                <Button text="Сохранить" disable="true"/>
-                            </HBox>
-                            <TableView fx:id="salesTable" VBox.vgrow="ALWAYS">
-                                <columns>
-                                    <TableColumn fx:id="colSalesId" text="ID" prefWidth="50"/>
-                                    <TableColumn fx:id="colSalesBuyer" text="Покупатель" prefWidth="180"/>
-                                    <TableColumn fx:id="colSalesMedicine" text="Препарат" prefWidth="180"/>
-                                    <TableColumn fx:id="colSalesQuantity" text="Количество" prefWidth="100"/>
-                                    <TableColumn fx:id="colSalesDate" text="Дата продажи" prefWidth="120"/>
-                                    <TableColumn fx:id="colSalesRecipe" text="Рецепт предъявлен" prefWidth="150"/>
-                                    <TableColumn fx:id="colSalesSum" text="Сумма (руб.)" prefWidth="120"/>
-                                    <TableColumn fx:id="colSalesDeviation" text="Отклонение от среднего" prefWidth="180"/>
-                                </columns>
-                            </TableView>
-                        </VBox>
+                        <fx:include source="sales.fxml"/>
                     </content>
                 </Tab>
 

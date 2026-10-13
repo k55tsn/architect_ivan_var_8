@@ -25,4 +25,9 @@ public class Buyer {
     public void setFirstName(String v) { this.firstName = v; }
     public void setPhone(String v) { this.phone = v; }
     public void setCardNumber(String v) { this.cardNumber = v; }
+
+    @Override
+    public String toString() {
+        return lastName + " " + firstName;
+    }
 }

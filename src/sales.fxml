@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.SalesController"
+      spacing="10" style="-fx-padding: 10;">
+
+    <HBox spacing="10">
+        <Button text="Добавить" onAction="#onAdd"/>
+        <Button text="Загрузить" onAction="#onLoad"/>
+        <Button text="Сохранить" onAction="#onSave"/>
+    </HBox>
+
+    <TableView fx:id="salesTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="colBuyer" text="Покупатель" prefWidth="180"/>
+            <TableColumn fx:id="colMedicine" text="Препарат" prefWidth="180"/>
+            <TableColumn fx:id="colQuantity" text="Количество" prefWidth="100"/>
+            <TableColumn fx:id="colDate" text="Дата продажи" prefWidth="120"/>
+            <TableColumn fx:id="colRecipe" text="Рецепт предъявлен" prefWidth="150"/>
+            <TableColumn fx:id="colSum" text="Сумма (руб.)" prefWidth="120"/>
+            <TableColumn fx:id="colDeviation" text="Отклонение от среднего" prefWidth="180"/>
+        </columns>
+    </TableView>
+</VBox>

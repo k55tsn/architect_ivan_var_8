@@ -1,6 +1,6 @@
 package controller;
 
-
+import javafx.scene.control.TableCell;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -32,19 +32,53 @@ public class SalesController {
 
     private final DataStore store = DataStore.getInstance();
 
-    @FXML
+        @FXML
     private void initialize() {
-        System.out.println(">>> SalesController.initialize() вызван");
         colId.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getId()).asObject());
         colBuyer.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getBuyer().toString()));
         colMedicine.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMedicine().getName()));
         colQuantity.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getQuantity()).asObject());
         colDate.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDate().toString()));
         colRecipe.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().isRecipePresented() ? "Да" : "Нет"));
-        colSum.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getSum()).asObject());
-        colDeviation.setCellValueFactory(c -> new SimpleDoubleProperty(calculateDeviation(c.getValue())).asObject());
+        // Колонка "Сумма" — формат 0.00
+colSum.setCellFactory(col -> new TableCell<Sale, Double>() {
+    @Override
+    protected void updateItem(Double item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+            setText(null);
+        } else {
+            setText(String.format("%.2f", item));
+        }
+    }
+});
+colSum.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getSum()).asObject());
+
+// Колонка "Отклонение" — формат 0.00, с учётом среднего
+colDeviation.setCellFactory(col -> new TableCell<Sale, Double>() {
+    @Override
+    protected void updateItem(Double item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+            setText(null);
+        } else {
+            setText(String.format("%.2f", item));
+        }
+    }
+});
+colDeviation.setCellValueFactory(c -> {
+    double avg = store.getSales().stream()
+            .mapToDouble(Sale::getSum)
+            .average().orElse(0);
+    return new SimpleDoubleProperty(c.getValue().getSum() - avg).asObject();
+});
 
         salesTable.setItems(store.getSales());
+
+        // Автоматически пересчитывать отклонение при любом изменении списка
+        store.getSales().addListener((javafx.collections.ListChangeListener<Sale>) c -> {
+            salesTable.refresh();
+        });
 
         ContextMenu contextMenu = new ContextMenu();
         MenuItem editItem = new MenuItem("Редактировать");
@@ -69,11 +103,6 @@ public class SalesController {
         });
     }
 
-    private double calculateDeviation(Sale sale) {
-        if (store.getSales().isEmpty()) return 0;
-        double avg = store.getSales().stream().mapToDouble(Sale::getSum).average().orElse(0);
-        return sale.getSum() - avg;
-    }
 
     @FXML
     private void onAdd() {

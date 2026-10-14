@@ -31,4 +31,19 @@ public class DataStore {
     public int nextBuyerId() { return nextBuyerId++; }
     public int nextMedicineId() { return nextMedicineId++; }
     public int nextSaleId() { return nextSaleId++; }
+       // --- Состояние авторизации ---
+    private final javafx.beans.property.SimpleBooleanProperty authorized =
+            new javafx.beans.property.SimpleBooleanProperty(false);
+
+    public boolean isAuthorized() {
+        return authorized.get();
+    }
+
+    public void setAuthorized(boolean value) {
+        this.authorized.set(value);
+    }
+
+    public javafx.beans.property.SimpleBooleanProperty authorizedProperty() {
+        return authorized;
+    }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.scene.control.TableCell;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,56 +29,58 @@ public class SalesController {
     @FXML private TableColumn<Sale, Double> colSum;
     @FXML private TableColumn<Sale, Double> colDeviation;
 
+    @FXML private Button addBtn;
+    @FXML private Button loadBtn;
+    @FXML private Button saveBtn;
+
     private final DataStore store = DataStore.getInstance();
 
-        @FXML
+    @FXML
     private void initialize() {
+        // --- Колонки ---
         colId.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getId()).asObject());
         colBuyer.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getBuyer().toString()));
         colMedicine.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMedicine().getName()));
         colQuantity.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getQuantity()).asObject());
         colDate.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDate().toString()));
         colRecipe.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().isRecipePresented() ? "Да" : "Нет"));
-        // Колонка "Сумма" — формат 0.00
-colSum.setCellFactory(col -> new TableCell<Sale, Double>() {
-    @Override
-    protected void updateItem(Double item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-            setText(null);
-        } else {
-            setText(String.format("%.2f", item));
-        }
-    }
-});
-colSum.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getSum()).asObject());
 
-// Колонка "Отклонение" — формат 0.00, с учётом среднего
-colDeviation.setCellFactory(col -> new TableCell<Sale, Double>() {
-    @Override
-    protected void updateItem(Double item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-            setText(null);
-        } else {
-            setText(String.format("%.2f", item));
-        }
-    }
-});
-colDeviation.setCellValueFactory(c -> {
-    double avg = store.getSales().stream()
-            .mapToDouble(Sale::getSum)
-            .average().orElse(0);
-    return new SimpleDoubleProperty(c.getValue().getSum() - avg).asObject();
-});
+        // --- Колонка "Сумма" — формат 0.00 ---
+        colSum.setCellFactory(col -> new TableCell<Sale, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", item));
+                }
+            }
+        });
+        colSum.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getSum()).asObject());
+
+        // --- Колонка "Отклонение" — формат 0.00 ---
+        colDeviation.setCellFactory(col -> new TableCell<Sale, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", item));
+                }
+            }
+        });
+        colDeviation.setCellValueFactory(c -> {
+            double avg = store.getSales().stream()
+                    .mapToDouble(Sale::getSum)
+                    .average().orElse(0);
+            return new SimpleDoubleProperty(c.getValue().getSum() - avg).asObject();
+        });
 
         salesTable.setItems(store.getSales());
 
-        // Автоматически пересчитывать отклонение при любом изменении списка
-        store.getSales().addListener((javafx.collections.ListChangeListener<Sale>) c -> {
-            salesTable.refresh();
-        });
-
+        // --- Контекстное меню ---
         ContextMenu contextMenu = new ContextMenu();
         MenuItem editItem = new MenuItem("Редактировать");
         MenuItem deleteItem = new MenuItem("Удалить");
@@ -94,19 +95,29 @@ colDeviation.setCellValueFactory(c -> {
         salesTable.setRowFactory(tv -> {
             TableRow<Sale> row = new TableRow<>();
             row.setOnContextMenuRequested(event -> {
-                if (!row.isEmpty()) {
+                if (!row.isEmpty() && store.isAuthorized()) {
                     salesTable.getSelectionModel().select(row.getItem());
                     contextMenu.show(row, event.getScreenX(), event.getScreenY());
                 }
             });
             return row;
         });
-    }
 
+        // --- Активация кнопок после входа ---
+        store.authorizedProperty().addListener((obs, oldV, newV) -> {
+            addBtn.setDisable(!newV);
+            loadBtn.setDisable(!newV);
+            saveBtn.setDisable(!newV);
+        });
+
+        // Начальное состояние (пользователь не авторизован → кнопки отключены)
+        addBtn.setDisable(!store.isAuthorized());
+        loadBtn.setDisable(!store.isAuthorized());
+        saveBtn.setDisable(!store.isAuthorized());
+    }
 
     @FXML
     private void onAdd() {
-        System.out.println(">>> SalesController.onAdd() вызван");
         Sale created = showForm(null);
         if (created != null) {
             Sale withId = new Sale(store.nextSaleId(), created.getBuyer(), created.getMedicine(),
@@ -169,7 +180,7 @@ colDeviation.setCellValueFactory(c -> {
         }
     }
 
-       @FXML
+    @FXML
     private void onSave() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Сохранить продажи в CSV");

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.DataStore;
 
 public class MainController {
 
@@ -19,19 +20,20 @@ public class MainController {
         tabPane.getSelectionModel().select(0);
     }
 
-    @FXML
-    private void onLogin() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.setTitle("Авторизация");
-        dialog.setScene(new Scene(loader.load()));
+   @FXML
+private void onLogin() throws Exception {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+    Stage dialog = new Stage();
+    dialog.initModality(Modality.APPLICATION_MODAL);
+    dialog.setTitle("Авторизация");
+    dialog.setScene(new Scene(loader.load()));
 
-        LoginController controller = loader.getController();
-        controller.setOnSuccess(user ->
-                statusLabel.setText("Авторизован: " + user.getFullName())
-        );
+    LoginController controller = loader.getController();
+    controller.setOnSuccess(user -> {
+        statusLabel.setText("Авторизован: " + user.getFullName());
+        DataStore.getInstance().setAuthorized(true);   // ← добавьте эту строку
+    });
 
-        dialog.showAndWait();
-    }
+    dialog.showAndWait();
+}
 }

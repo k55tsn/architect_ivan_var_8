@@ -44,6 +44,12 @@ public class SalesController {
         colQuantity.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getQuantity()).asObject());
         colDate.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDate().toString()));
         colRecipe.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().isRecipePresented() ? "Да" : "Нет"));
+colBuyer.setSortable(true);
+colMedicine.setSortable(true);
+colQuantity.setSortable(true);
+colQuantity.setComparator(Integer::compareTo);
+colSum.setSortable(true);
+colSum.setComparator(Double::compareTo);
 
         // --- Колонка "Сумма" — формат 0.00 ---
         colSum.setCellFactory(col -> new TableCell<Sale, Double>() {

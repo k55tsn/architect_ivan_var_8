@@ -27,6 +27,12 @@ public class MedicinesController {
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colNeedRecipe.setCellValueFactory(new PropertyValueFactory<>("needRecipe"));
+colName.setSortable(true);
+colName.setComparator(String::compareToIgnoreCase);
+colCategory.setSortable(true);
+colPrice.setSortable(true);
+colPrice.setComparator(Double::compareTo);
+colNeedRecipe.setSortable(true);
 
         medicinesTable.setItems(store.getMedicines());
 

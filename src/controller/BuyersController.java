@@ -27,6 +27,12 @@ public class BuyersController {
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colCard.setCellValueFactory(new PropertyValueFactory<>("cardNumber"));
+colLastName.setSortable(true);
+colLastName.setComparator(String::compareToIgnoreCase);
+colFirstName.setSortable(true);
+colFirstName.setComparator(String::compareToIgnoreCase);
+colPhone.setSortable(true);
+colCard.setSortable(true);
 
         buyersTable.setItems(store.getBuyers());
 

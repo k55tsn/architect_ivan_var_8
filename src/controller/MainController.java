@@ -15,10 +15,20 @@ public class MainController {
     @FXML private TabPane tabPane;
 
     @FXML
-    private void initialize() {
-        statusLabel.setText("Не авторизован");
-        tabPane.getSelectionModel().select(0);
-    }
+private void initialize() {
+    updateStatus();
+    DataStore store = DataStore.getInstance();
+    store.getSales().addListener((javafx.collections.ListChangeListener<model.Sale>) c -> updateStatus());
+    store.authorizedProperty().addListener((obs, o, n) -> updateStatus());
+}
+
+private void updateStatus() {
+    DataStore store = DataStore.getInstance();
+    String user = store.isAuthorized() ? "Авторизован" : "Не авторизован";
+    int count = store.getSales().size();
+    String date = java.time.LocalDate.now().toString();
+    statusLabel.setText(user + " | Записей: " + count + " | Дата: " + date);
+}
 
    @FXML
 private void onLogin() throws Exception {

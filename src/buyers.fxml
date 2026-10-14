@@ -9,7 +9,7 @@
       spacing="10" style="-fx-padding: 10;">
 
     <HBox spacing="10">
-        <Button text="Добавить" onAction="#onAdd"/>
+    <Button fx:id="addBtn" text="Добавить" onAction="#onAdd" disable="true"/>
     </HBox>
 
     <TableView fx:id="buyersTable" VBox.vgrow="ALWAYS">

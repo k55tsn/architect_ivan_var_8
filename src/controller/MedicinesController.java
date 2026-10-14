@@ -17,6 +17,7 @@ public class MedicinesController {
     @FXML private TableColumn<Medicine, String> colCategory;
     @FXML private TableColumn<Medicine, Double> colPrice;
     @FXML private TableColumn<Medicine, Boolean> colNeedRecipe;
+    @FXML private Button addBtn;
 
     private final DataStore store = DataStore.getInstance();
 
@@ -43,13 +44,18 @@ public class MedicinesController {
         medicinesTable.setRowFactory(tv -> {
             TableRow<Medicine> row = new TableRow<>();
             row.setOnContextMenuRequested(event -> {
-                if (!row.isEmpty()) {
+                if (!row.isEmpty() && store.isAuthorized()) {
                     medicinesTable.getSelectionModel().select(row.getItem());
                     contextMenu.show(row, event.getScreenX(), event.getScreenY());
                 }
             });
             return row;
         });
+
+        // Активация кнопки после входа
+        store.authorizedProperty().addListener((obs, oldV, newV) ->
+                addBtn.setDisable(!newV));
+        addBtn.setDisable(!store.isAuthorized());
     }
 
     @FXML

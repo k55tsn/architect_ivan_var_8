@@ -17,6 +17,7 @@ public class BuyersController {
     @FXML private TableColumn<Buyer, String> colFirstName;
     @FXML private TableColumn<Buyer, String> colPhone;
     @FXML private TableColumn<Buyer, String> colCard;
+    @FXML private Button addBtn;
 
     private final DataStore store = DataStore.getInstance();
 
@@ -43,15 +44,22 @@ public class BuyersController {
         buyersTable.setRowFactory(tv -> {
             TableRow<Buyer> row = new TableRow<>();
             row.setOnContextMenuRequested(event -> {
-                if (!row.isEmpty()) {
+                if (!row.isEmpty() && store.isAuthorized()) {
                     buyersTable.getSelectionModel().select(row.getItem());
                     contextMenu.show(row, event.getScreenX(), event.getScreenY());
                 }
             });
             return row;
         });
-    }
 
+        // Активация кнопки и контекстного меню после входа
+        store.authorizedProperty().addListener((obs, oldV, newV) -> {
+            addBtn.setDisable(!newV);
+        
+        
+        addBtn.setDisable(!store.isAuthorized());
+    });
+    }
     @FXML
     private void onAdd() {
         Buyer created = showForm(null);

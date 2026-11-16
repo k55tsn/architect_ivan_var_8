@@ -16,7 +16,8 @@
         <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
         <Label text="Категория:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <ComboBox fx:id="categoryCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="200"/>
+        <!-- ВОТ ЗДЕСЬ добавлено editable="true" -->
+        <ComboBox fx:id="categoryCombo" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="200"/>
 
         <Label text="Цена (руб.):" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
         <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="например, 150.50"/>

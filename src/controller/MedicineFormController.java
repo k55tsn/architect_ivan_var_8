@@ -42,7 +42,11 @@ public class MedicineFormController {
     @FXML
     private void onSave() {
         String name = nameField.getText().trim();
-        String category = categoryCombo.getValue();
+        String category = this.categoryCombo.getEditor().getText();
+if (category == null || category.trim().isEmpty()) {
+    category = this.categoryCombo.getValue();
+}
+category = (category != null) ? category.trim() : "";
         String priceStr = priceField.getText().trim();
 
         if (name.isEmpty()) {
